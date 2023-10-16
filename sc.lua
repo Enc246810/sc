@@ -16,12 +16,12 @@ if bitS == nil then
   return
   else
   if bitS == 1 then
-    gg.setRanges(gg.REGION_OTHER | gg.REGION_C_ALLOC | gg.REGION_ANONYMOUS)
+    gg.setRanges(gg.REGION_C_ALLOC | gg.REGION_ANONYMOUS)
     timerOfset = 0x74
     console = console..os.date("(%H:%M:%S)   ").."32 Bit selected.\n"
   end
   if bitS == 2 then
-    gg.setRanges(gg.REGION_OTHER | gg.REGION_C_ALLOC | gg.REGION_ANONYMOUS)
+    gg.setRanges(gg.REGION_C_ALLOC | gg.REGION_ANONYMOUS)
     timerOfset = 0x9c
     console = console..os.date("(%H:%M:%S)   ").."64 Bit selected.\n"
   end
@@ -38,11 +38,11 @@ SIMCITY SCRIPT
 ------------------------------------------------------------
 What's New?
 Updated: 2
-01/10/2023
+16/10/2023
 
 ✓- Fixed Android 11 and up devices. (BETA)
 
-✓- Added: Strong Console (in premium script. )
+✓- General bugs fixed.
 
 ------------------------------------------------------------
 ]]
@@ -51,7 +51,7 @@ function protection()
   p = gg.prompt({"Protection Key:"}, {""}, {"text"})
   if p == nil then
   else
-  if p[1] == "beta" then
+  if p[1] == "hello" then
     console = console..os.date("(%H:%M:%S)   ").."Protection key is correct.\n"
     gg.toast("\nProtection key is correct.")
     aWait = 0
