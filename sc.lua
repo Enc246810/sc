@@ -38,11 +38,11 @@ SIMCITY SCRIPT
 ------------------------------------------------------------
 What's New?
 Updated: 2
-16/10/2023
+20/10/2023
 
 ✓- Fixed Android 11 and up devices. (BETA)
 
-✓- General bugs fixed.
+✓- Fixed Reset timer function.
 
 ------------------------------------------------------------
 ]]
