@@ -85,6 +85,25 @@ function ofsets()
   gg.setVisible(false)
 end
 
+function productionTimer()
+	  R3 = gg.getResults(1)
+	  local ofset = {}
+	  ofset[1] = {}
+	  ofset[1].address = R3[1].address + 4
+	  ofset[1].flags = gg.TYPE_DWORD
+	  ofset[1].freeze = false
+	  gg.addListItems(ofset)
+	  gg.setVisible(false)
+	  g1 = gg.getListItems(1)
+if g1[1].value == 0 then
+     ofsetOffsets = 0
+     ofsetValues = 0
+     ofsets()
+    gg.clearResults()
+    gg.searchNumber("9900000",gg.TYPE_DWORD)
+  end
+end
+
 function mainMenu()
   
   m1 = gg.choice({"⭐┃Premium", "⌛┃Set 0 All Production and Nano timers", "💵┃48k simcash", "💰┃20m simoleon", "❌┃Exit", "⚙️┃CONSOLE"},nil,"[BETA] Your date is: "..os.date("%d/%m/%Y"))
@@ -123,24 +142,9 @@ function mainMenu()
 			blocker = 1
 			return
 			end
-		R = gg.getResults(1)
-		local ofset = {}
-		ofset[1] = {}
-		ofset[1].address = R[1].address + 4
-		ofset[1].flags = gg.TYPE_DWORD
-		ofset[1].freeze = false
-		gg.addListItems(ofset)
-		gg.setVisible(false)
-		get = gg.getListItems("1")
-		gg.sleep("200")
-		if get[1].value == 0 then
-		  ofsetOffsets = 4
-		  ofsetValues = 0
-		  ofsets()
-  		gg.clearResults()
-  			gg.searchNumber("9900000",gg.TYPE_DWORD)
-		end
+		productionTimer()
 		R2 = gg.getResults(1)
+		local ofset = {}
 		ofset[1] = {}
 		ofset[1].address = R2[1].address - timerOfset
 		ofset[1].flags = gg.TYPE_DWORD
@@ -151,7 +155,7 @@ function mainMenu()
 		get2 = gg.getListItems("1")
 		gg.clearResults()
 		gg.searchNumber(get2[1].value,gg.TYPE_DWORD)
-		local rslt = gg.getResults("108")
+		local rslt = gg.getResults("200")
 		gg.addListItems(rslt)
 		rslt = nil
 		
@@ -185,7 +189,6 @@ function mainMenu()
 		gg.toast("\nSuccessful")
 		blocker = 1
 		console = console..os.date("(%H:%M:%S)   ").."Successful.\n"
-		gg.alert("If this wrong Successful try again.")
 	  end
 	end
   
