@@ -38,9 +38,9 @@ SIMCITY SCRIPT
 ------------------------------------------------------------
 What's New?
 Updated: 2
-20/10/2023
+23/10/2023
 
-✓- Fixed Android 11 and up devices. (BETA)
+✓- Added reset timer function 2. (BETA)
 
 ✓- Fixed Reset timer function.
 
@@ -104,6 +104,23 @@ if g1[1].value == 0 then
   end
 end
 
+function productionTimer2()
+	  a = gg.alert("Do you ready?", "YES", "NO")
+	  if a == 1 then
+		    gg.refineNumber("60000~60000000")
+		    gg.getResults("200")
+		    gg.editAll("0",gg.TYPE_DWORD)
+		    gg.clearResults()
+		    gg.clearList()
+		    aWait = 0
+		    gg.toast("\nSuccessful")
+	end
+	  if a == 2 then
+		    gg.toast("\nOkay I waiting you.")
+		    return
+	end
+end
+
 function mainMenu()
   
   m1 = gg.choice({"⭐┃Premium", "⌛┃Set 0 All Production and Nano timers", "💵┃48k simcash", "💰┃20m simoleon", "❌┃Exit", "⚙️┃CONSOLE"},nil,"[BETA] Your date is: "..os.date("%d/%m/%Y"))
@@ -133,63 +150,128 @@ function mainMenu()
   		end
 		end
 		if blocker == 0 then
-		  console = console..os.date("(%H:%M:%S)   ").."Productions timer searching...\n"
-		gg.toast("\nPlease Wait...")
-		gg.clearResults()
-			gg.searchNumber("9900000",gg.TYPE_DWORD)
-		  if gg.getResultsCount() == 0 then
-			valueNotFound()
-			blocker = 1
-			return
+		pti = gg.choice({"Function 1 %100 auto", "Function 2 %75 auto"})
+					if pti == nil then
+						  gg.toast("\nCANCEL")
+						  return
+			else
+						if pti == 1 then
+					  		  console = console..os.date("(%H:%M:%S)   ").."Productions timer searching...\n"
+					  		gg.toast("\nPlease Wait...")
+					  		gg.clearResults()
+					  			gg.searchNumber("9900000",gg.TYPE_DWORD)
+					  		  if gg.getResultsCount() == 0 then
+						  			valueNotFound()
+						  			blocker = 1
+						  			return
+					end
+					  		productionTimer()
+					  		R2 = gg.getResults(1)
+					  		local ofset = {}
+					  		ofset[1] = {}
+					  		ofset[1].address = R2[1].address - timerOfset
+					  		ofset[1].flags = gg.TYPE_DWORD
+					  		ofset[1].freeze = false
+					  		gg.addListItems(ofset)
+					  		gg.setVisible(false)
+					  		gg.sleep("200")
+					  		get2 = gg.getListItems("1")
+					  		gg.clearResults()
+					  		gg.searchNumber(get2[1].value,gg.TYPE_DWORD)
+					  		local rslt = gg.getResults("200")
+					  		gg.addListItems(rslt)
+					  		rslt = nil
+
+
+					  		local copy = false
+					  		local rslt = gg.getListItems()
+					  		if not copy then gg.removeListItems(rslt) end
+					  		for i, v in ipairs(rslt) do
+						  		v.address = v.address + timerOfset
+						  		if copy then v.name = v.name..' #2' end
+					end
+					  		gg.addListItems(rslt)
+					  		t = nil
+					  		copy = nil
+
+
+					  		revert = gg.getListItems()
+					  		local rslt = gg.getListItems()
+					  		for i, v in ipairs(rslt) do
+						  		if v.flags == gg.TYPE_DWORD then
+							  			v.value = "0"
+							  			v.freeze = false
+							  			v.freezeType = gg.FREEZE_NORMAL
+						end
+					end
+					  		gg.addListItems(rslt)
+					  		gg.setValues(rslt)
+					  		rslt = nil
+					  		gg.clearResults()
+					  		gg.clearList()
+					  		gg.toast("\nSuccessful")
+					  		blocker = 1
+					  		console = console..os.date("(%H:%M:%S)   ").."Successful.\n"
+				end
 			end
-		productionTimer()
-		R2 = gg.getResults(1)
-		local ofset = {}
-		ofset[1] = {}
-		ofset[1].address = R2[1].address - timerOfset
-		ofset[1].flags = gg.TYPE_DWORD
-		ofset[1].freeze = false
-		gg.addListItems(ofset)
-		gg.setVisible(false)
-		gg.sleep("200")
-		get2 = gg.getListItems("1")
-		gg.clearResults()
-		gg.searchNumber(get2[1].value,gg.TYPE_DWORD)
-		local rslt = gg.getResults("200")
-		gg.addListItems(rslt)
-		rslt = nil
-		
-		
-		local copy = false
-		local rslt = gg.getListItems()
-		if not copy then gg.removeListItems(rslt) end
-		for i, v in ipairs(rslt) do
-		v.address = v.address + timerOfset
-		if copy then v.name = v.name..' #2' end
+					if pti == 2 then
+						  console = console..os.date("(%H:%M:%S)   ").."Productions timer searching...\n"
+				  		gg.toast("\nPlease Wait...")
+				  		gg.clearResults()
+				  		gg.clearList()
+				  		gg.searchNumber("9900000",gg.TYPE_DWORD)
+				  		if gg.getResultsCount() == 0 then
+					  			valueNotFound()
+					  			blocker = 1
+					  			return
+				end
+				  		productionTimer()
+				  		R2 = gg.getResults(1)
+				  		local ofset = {}
+				  		ofset[1] = {}
+				  		ofset[1].address = R2[1].address + 0x4
+				  		ofset[1].flags = gg.TYPE_DWORD
+				  		ofset[1].freeze = false
+				  		gg.addListItems(ofset)
+				  		gg.setVisible(false)
+				  		gg.sleep("200")
+				  		get2 = gg.getListItems("1")
+				  		gg.clearResults()
+				  		gg.searchNumber(get2[1].value,gg.TYPE_DWORD)
+				  		local rslt = gg.getResults("2500")
+				  		gg.addListItems(rslt)
+				  		rslt = nil
+
+
+				  		local copy = false
+				  		local rslt = gg.getListItems()
+				  		if not copy then gg.removeListItems(rslt) end
+				  		for i, v in ipairs(rslt) do
+					  		v.address = v.address + -0x4
+					  		if copy then v.name = v.name..' #2' end
+				end
+				  		gg.addListItems(rslt)
+				  		t = nil
+				  		copy = nil
+
+
+				  		revert = gg.getListItems()
+				  		local rslt = gg.getListItems()
+				  		for i, v in ipairs(rslt) do
+					  		if v.flags == gg.TYPE_DWORD then
+						  			v.freeze = false
+						  			v.freezeType = gg.FREEZE_NORMAL
+					end
+				end
+				  		gg.addListItems(rslt)
+				  		rslt = nil
+				  		gg.clearResults()
+				  		gg.alert("Now select all saved value after click the (Selected as search results) button.")
+				  		aWait = 4
+				  		return
+			end
 		end
-		gg.addListItems(rslt)
-		t = nil
-		copy = nil
-		
-		
-		revert = gg.getListItems()
-		local rslt = gg.getListItems()
-		for i, v in ipairs(rslt) do
-		if v.flags == gg.TYPE_DWORD then
-			v.value = "0"
-			v.freeze = false
-			v.freezeType = gg.FREEZE_NORMAL
-		end
-		end
-		gg.addListItems(rslt)
-		gg.setValues(rslt)
-		rslt = nil
-		gg.clearResults()
-		gg.clearList()
-		gg.toast("\nSuccessful")
-		blocker = 1
-		console = console..os.date("(%H:%M:%S)   ").."Successful.\n"
-	  end
+	  
 	end
   
   if m1 == 3 then
@@ -469,5 +551,9 @@ while true do
     if aWait == 2 then
       protection()
     end
+		
+if aWait == 4 then
+			      productionTimer2()
+		end
   end
 end
